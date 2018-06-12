@@ -12,7 +12,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
     public function counts($user){
-        $count_microposts = $user->microposts()->count();
+        $count_microposts = $user->feed_microposts()->count();  //自分とフォローしている人のmicropostの合計数
         $count_followings = $user->followings()->count();
         $count_followers = $user->followers()->count();
         
