@@ -12,7 +12,18 @@
             <div>
                 <p>{!! nl2br(e($micropost->content)) !!}</p>
             </div>
-            <div>
+            <div style="display:inline-flex">
+                @if (Auth::user()->is_favorite($micropost->id))
+                    <!--お気に入りなのでunfavoriteボタン-->
+                    {!! Form::open(['route' => ['user.unfavorite', $micropost->id], 'method' => 'delete']) !!}
+                        {!! Form::submit('unfavorite', ['class' => 'btn btn-success btn-xs']) !!}
+                    {!! Form::close() !!}
+                @else
+                    <!--お気に入りじゃないのでunfavoriteボタン-->
+                    {!! Form::open(['route' => ['user.favorite', $micropost->id], 'method' => 'post']) !!}
+                        {!! Form::submit('favorite', ['class' => 'btn btn-default btn-xs']) !!}
+                    {!! Form::close() !!}
+                @endif
                 @if (Auth::user()->id == $micropost->user_id)
                     {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
                         {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
